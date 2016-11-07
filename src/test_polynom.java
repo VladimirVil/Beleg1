@@ -1,0 +1,205 @@
+import java.util.Scanner;
+
+public class test_polynom {
+	public static void main (String[] args)
+	{
+		final int SIZE=4;  //size of array that will contain the polynoms
+		final int SIZE_CHOICE=2;
+		int selection=0,selection_print=0;  //
+		//array to keep, on which polynoms will the future operation held
+		int[] choice = new int[SIZE_CHOICE];
+		Polynom[] pols = new Polynom[SIZE];
+		for(int j=0;j<SIZE;j++)//array to contain 3 polynoms + one polynom as result of last operation 
+		{
+			pols[j] = new Polynom();
+		}
+		selection = menu();
+		do
+		{
+			
+		
+		//	selection = menu();
+			switch (selection)  {
+			case 1 : //selection = 1;
+			{
+				pols[0].eingabe();
+				break;
+			}
+			case 11 : //selection = 11;
+			{
+				pols[1].eingabe();
+				break;
+			}
+			case 111 : //selection = 111;
+			{
+				pols[2].eingabe();
+				break;
+			}
+			case 2 : //selection = 2;
+			{
+				selection_print = menu_print();
+				if (selection_print == 1)
+					pols[0].ausgabe_print();
+				else if (selection_print == 11)
+					pols[1].ausgabe_print();
+				else if (selection_print ==111)
+					pols[2].ausgabe_print();
+				else if (selection_print ==1111)
+					pols[3].ausgabe_print();
+				break;
+			}
+			case 3 :
+			{
+				choice = menu_operation();
+				//result polynom wil contain add operation of the two choosen polynoms (out of 3 available)
+				pols[3]=pols[choice[0]-1].summe(pols[choice[0]-1], pols[choice[1]-1]);
+				//pols[3]=pols[0].summe(pols[0], pols[1]); //this actually works,but without choice 
+				break;
+			}
+			case 4 :
+			{
+				choice = menu_operation();
+				//result polynom wil contain add operation of the two choosen polynoms (out of 3 available)
+				pols[3]=pols[choice[0]-1].differ(pols[choice[0]-1], pols[choice[1]-1]);
+				//pols[3]=pols[0].differ(pols[0], pols[1]); 
+				break;
+			}
+			case 5 :
+			{
+				selection_print = menu_print();
+				if (selection_print == 1)
+					pols[0].abteilung();
+				else if (selection_print == 11)
+					pols[1].abteilung();
+				else if (selection_print ==111)
+					pols[2].abteilung();
+				else if (selection_print ==1111)
+					pols[3].abteilung();
+				break;
+			}
+			
+			case 6 :
+			{
+				choice = menu_operation();
+				pols[3]=pols[choice[0]-1].multiplication(pols[choice[0]-1], pols[choice[1]-1], pols[3]);
+			//	pols[3]=pols[0].multiplication(pols[0],pols[1],pols[3]);  //this one works, but without choice
+				//pols[0].multiplication(pols[0],pols[1],pols[2]);
+			}
+			default :
+			{
+				//System.out.printf("Sorry wrong input, please try again \44n");
+				break;
+			}
+		
+			}
+			String temp_str;
+			System.out.println("\n");
+			temp_str = pols[0].ausgabe_return();
+			System.out.println("The first polynom is \n" + temp_str);
+			temp_str = pols[1].ausgabe_return();
+			System.out.println("The second polynom is \n" + temp_str);
+			temp_str = pols[2].ausgabe_return();
+			System.out.println("The third polynom is \n" + temp_str);
+			temp_str = pols[3].ausgabe_return();
+			System.out.println("The result of last operation, excluding derevative is \n" + temp_str);
+
+			
+			
+			selection = menu();  //self comment - was important to prevent infinite loop
+		} while (selection!=7);
+		
+		
+		System.out.printf("*********Finished******** \n");		
+		
+	}
+	
+    public static int menu() {
+
+        int selection;  //can use same name, the variable is absolutely local
+        Scanner input = new Scanner(System.in);
+
+        /***************************************************/
+
+        System.out.println("Choose from the following choices");
+        System.out.println("-------------------------\n");
+        System.out.println("(1)   - Enter first polynom");
+        System.out.println("(11) - Enter second polynom");
+        System.out.println("(111) - Enter third polynom");
+       // System.out.println("1111 - Enter result polynom");
+        System.out.println("(2)   - Print a polynom");
+        System.out.println("(3)   - Add 2 polynoms");
+        System.out.println("(4)   - Difference of 2 polynoms");
+        System.out.println("(5)   - Deravative of a polynom");
+        System.out.println("(6)   - Multiplication of 2 polynoms");
+        System.out.println("(7)   - Quit");
+
+        selection = input.nextInt();
+        
+        System.out.println("\n");
+        
+        return selection;    
+    }
+    
+    public static int menu_print() {  //this is a mini-menu, to choose which polynom to print 
+
+        int selection;  //can use same name, the variable is absolutely local
+        Scanner input = new Scanner(System.in);
+
+        /***************************************************/
+
+        System.out.println("Choose from these choices - which polynom would you like to print ?");
+        System.out.println("-------------------------\n");
+        System.out.println("(1)   -  Enter first polynom");
+        System.out.println("(11)  -  Enter second polynom");
+        System.out.println("(111) -  Enter third polynom");
+        System.out.println("(1111) - Result of the last operation");
+        System.out.println("(7)   - Quit");
+
+        selection = input.nextInt();
+        return selection;    
+    }
+    
+    
+    //menu to choose on which polynoms would the operation be handled
+    public static int[] menu_operation()
+    {
+    	final int SIZE=2; //
+    	int selection[] = new int[SIZE];
+    	for (int i=0;i<SIZE;i++)
+    		selection[i]=0;
+    	
+    	Scanner input = new Scanner(System.in);
+    	
+        System.out.println("Choose first polynom for the operation:");
+        System.out.println("-------------------------\n");
+        System.out.println("(1)   -  Enter first polynom");
+        System.out.println("(11)  -  Enter second polynom");
+        System.out.println("(111) -  Enter third polynom");
+        selection[0]=input.nextInt();
+        
+        System.out.println("Choose second polynom for the operation:");
+        System.out.println("-------------------------\n");
+        System.out.println("(1)   -  Enter first polynom");
+        System.out.println("(11)  -  Enter second polynom");
+        System.out.println("(111) -  Enter third polynom");
+        selection[1]=input.nextInt();
+        //converts the choice for future use into array numbers
+        for (int i=0;i<SIZE;i++)
+        {
+        	if (selection[i]==1)
+        		selection[i]=1;
+        	else if (selection[i]==11)
+        		selection[i]=2;
+        	else if(selection[i]==111)
+        		selection[i]=3;
+        	else
+        		selection[i]=0;
+        }
+        
+        return selection;
+    	
+    	
+    	
+    }
+
+}
