@@ -1,10 +1,24 @@
 import java.util.Scanner;
-
 import java.io.*;
+
+/**
+ * 
+ * @author Vladimir Vilenchik s0556191@htw-berlin.de
+ * @since 10.11.2016
+ * @version 1.0.0
+ *
+ */
+
 public class Polynom {
-	 final int DIM = 7;  //maximal degree of the polynom ( 0,1,2,3,4,5,6)
-	 private double[] pol = new double[DIM];  //array that will contain the values of polynom fields
-	 private double[] pol_derivativ = new double[DIM]; //array, that will contain the derivative polynom
+	
+	/**
+	 * @param DIM maximal degree of the polynom ( 0,1,2,3,4,5,6)
+	 * @param pol array that will contain the values of polynom fields
+	 * @param pol_derivativ array, that will contain the derivative polynom
+	 */
+	 final int DIM = 7; 
+	 private double[] pol = new double[DIM];  
+	 private double[] pol_derivativ = new double[DIM]; 
 	 private String polystring = "" ;
 	 
 	 Polynom ()    // simple constructor, builds 0+..+0 = 0  polynom
@@ -14,11 +28,14 @@ public class Polynom {
 		 this.polystring = this.ausgabe(this.pol);
 	 }
 	 
+	 
 	 public void eingabe()  //some functions are private, and have public access function. This is maybe not needed right now,
 	                        //but may provide future security in case the Class will grow further
 	 
 	 {
-		
+		/**
+		 * @param reader saves the input from the user 
+		 */
 		 Scanner reader = new Scanner(System.in);
 		 System.out.printf("Please provide the degree of the polynom(maximum 6) \n");
 		 int choice = reader.nextInt();
@@ -81,6 +98,10 @@ public class Polynom {
 			 
 		 }
 	 }
+		 // in case, user would like to re-write big polynom with smaller polynom,
+		 //this will eliminate the old values of higher degrees of previous polynom
+		for (int i = choice+1; i<DIM;i++)
+			pol[i]=0;
 	 }
 	 
 	 
@@ -93,17 +114,29 @@ public class Polynom {
 		 
 	 } 
 	 
+
 	 public String ausgabe_return()  // function to get the polynom inside a string, without printing
 	 {
+		 /**
+		  * 
+		  * @return Polynom as string
+		  */
+		return ausgabe(this.pol);
 		
-		 return ausgabe(this.pol);
 	 }
 	 
 	 
 	 // service function for the class - builds string from the polynom,
-	 // functions also as toString
+	 // instead toString
+
 	 private String ausgabe(double[] p)  //calculating private function
 	 {
+		 /**
+		  * 
+		  * @param p the given polynom
+		  * @param tmp_arr array of chars to contain the polynom
+		  * @return polynom as string
+		  */
 		 String polstring = "";
 		 for (int i=DIM-1;i>=0;i--)   // building the polynom and saving inside a string variable
 		 {
@@ -145,14 +178,38 @@ public class Polynom {
 	 {
 		 this.change(new_p);
 	 }
-	 
-	 public double get_place_value(int x)  //returns the value on the place x in the polynom
+
+	 private double get_place_value(int x)  //returns the value on the place x in the polynom
 	 {
+		 /**
+		  * 
+		  * @param x The place in polynom who's value is needed
+		  * @return value on this place
+		  */
 		 return this.pol[x];
+	 }
+	 
+
+	 public void print_value(int x)
+	 {
+		 /**
+		  * 
+		  * @param x The place in polynom who's value is needed
+		  * @param value value on this place
+		  */
+		 double value = this.get_place_value(x);
+		 System.out.println("The value on a place " + x + " is" + value + "\n");
 	 }
 	 
 	 public Polynom summe (Polynom p1,Polynom p2)
 	 {
+		 /**
+		  * 
+		  * @param p1 First polynom
+		  * @param p2 Second polynom
+		  * @param result The sum of first and second polynoms
+		  * @return result of the add operation 
+		  */
 		 Polynom result = new Polynom();
 		 
 		 for (int i = DIM-1; i>=0 ; i--)
@@ -161,10 +218,19 @@ public class Polynom {
 		 return result;
 		 
 	 }
+	 
+
 	 public Polynom differ(Polynom p1, Polynom p2)  
 	 // substracts p2 from p1, and saves the result
 	 									   
 	 {
+		 /**
+		  * 
+		  * @param p1 First polynom
+		  * @param p2 Second polynom
+		  * @param result The difference of first nd second polynom
+		  * @return Result of the difference action 
+		  */
 		 Polynom result = new Polynom();
 		 
 		 for (int i = DIM-1; i>=0 ; i--)
@@ -181,7 +247,6 @@ public class Polynom {
 		 this.polystring = this.ausgabe(this.pol);  // converting original polynom into string 
 		 // printing the original before the derevative
 		 System.out.println("The derevative of " + this.polystring + " is : \n");
-	///   for (int i=DIM-1;i>0;i--)
 		 for (int i = 0; i<DIM-1; i++)
 		 {
 			//calculation of derivative function
@@ -192,23 +257,19 @@ public class Polynom {
 		 
 	 }
 	 
-	/* private void dbltoint(double[] pol)  //function to eliminate floating point, where it is not needed
-	 {
-		 int i;
-		 for (i=DIM-1;i>=0;i--)
-		 {
-			 if (pol[i] - (int)pol[i] == 0)
-				 pol[i] = (int)pol[i];
-			 
-		 }
-		 
-	 }
-	*/
-	 
-	 // gets 3 polynom objects, and save the result of multiplication
-	 // of the first two in the third in the first one 
+
 	 public Polynom  multiplication(Polynom p1, Polynom p2, Polynom result)
 	 {
+		 /**
+		  * 
+		  * @param p1 first polynom
+		  * @param p2 second polynom
+		  * @param result result of multiplication of first and second polynoms
+		  * @param HIGH size of service array to keep the degrees of polynoms
+		  * @param highest array to keep highest degree of each of the polynoms
+		  * @param possible tests if it is possible to multiplicate 2 given polynoms according to provided demands 
+		  * @return the result
+		  */
 		 
 		 final int HIGH = 2;
 		 // max allowed degree of result polynom after multiplication
@@ -253,8 +314,15 @@ public class Polynom {
 		  
 	 }
 	
+
 	 private int h_degree(Polynom p1)
 	 {
+			
+		 /**
+		  * 
+		  * @param p1 Polynom
+		  * @return Highest degree of the given polynom
+		  */
 		 int i=DIM;
 		 int result;
 		 // checks the highest degree of a polynom
