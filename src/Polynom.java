@@ -289,10 +289,10 @@ public class Polynom {
         	 possible = false;
          if (possible == false)
          {
-        	 System.out.printf("Sory, cannot perform multiplication - the degree \n");
+        	 System.out.printf("Sorry, cannot perform multiplication - the degree \n");
         	 System.out.printf("of result polynom is higher then " + MAX_RES + "\n");
          }
-         // if the variable possible is true, the multipliction will be calculated as following:
+         // if the variable possible is true, the multiplication will be calculated as following:
          else
          {
         	for(int k=DIM-1; k>=0;k--)
@@ -305,7 +305,10 @@ public class Polynom {
         			
         		}
         	}
-        	
+           for (int temp = highest[0] + highest[1];i<DIM;i++)
+           {
+        		result.pol[temp]=0;
+           }
         	String res_string = result.ausgabe(result.pol);
             System.out.println("The result of multiplication is " + res_string);
          }	

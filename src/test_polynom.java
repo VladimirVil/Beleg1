@@ -99,6 +99,7 @@ public class test_polynom {
 			{
 				choice = menu_operation();
 				pols[3]=pols[choice[0]-1].multiplication(pols[choice[0]-1], pols[choice[1]-1], pols[3]);
+				break;
 			}
 			
 			case 7 :
@@ -184,7 +185,8 @@ public class test_polynom {
 
         /***************************************************/
 
-        System.out.println("Choose from these choices - which polynom would you like to print ?");
+      //  System.out.println("Choose from these choices - which polynom would you like to print ?");
+        System.out.println("Choose from these choices ");
         System.out.println("-------------------------\n");
         System.out.println("(1)   -  Enter first polynom");
         System.out.println("(11)  -  Enter second polynom");
